@@ -1,68 +1,10 @@
 P:\>docker pull aertslab/pyscenic:0.12.1
 
-0.12.1: Pulling from aertslab/pyscenic
-1efc276f4ff9: Pull complete
-126aaa6587b8: Pull complete
-0dd06b55ca68: Pull complete
-3950cece0b72: Pull complete
-a4cc5c9d5acb: Pull complete
-bdf10448670a: Pull complete
-6c5350e3d2c5: Pull complete
-Digest: sha256:0c06b8b0a00117e1a4b61303e9ad775bf53c9e410d4c344151c15bf0d143a288
-Status: Downloaded newer image for aertslab/pyscenic:0.12.1
-docker.io/aertslab/pyscenic:0.12.1
-
 P:\>docker info
-
-Client:
- Version:    27.3.1
- Context:    desktop-linux
- Debug Mode: false
- Plugins:
-  buildx: Docker Buildx (Docker Inc.)
-    Version:  v0.17.1-desktop.1
-    Path:     C:\Program Files\Docker\cli-plugins\docker-buildx.exe
-P:\>dir "C:\Users\S236282\Desktop\Itaconate data\pySCENIC\docker"
- Volume in drive C has no label.
- Volume Serial Number is 2CEB-50B5
- Directory of C:\Users\S236282\Desktop\Itaconate data\pySCENIC\docker
-
-11/18/2024  08:22 AM    <DIR>          .
-11/15/2024  09:17 AM    <DIR>          ..
-11/01/2024  09:27 AM            11,726 allTFs_mm.txt
-11/18/2024  08:22 AM       192,811,373 InjuryData_Expression.csv
-11/01/2024  02:53 PM       237,172,098 mm10_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather
-11/01/2024  02:54 PM       238,348,346 mm10_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather
-11/01/2024  02:54 PM       222,264,554 mm10_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.scores.feather
-11/01/2024  09:26 AM       113,107,706 motifs-v10nr_clustnr_mgi.tbl
-               6 File(s)  1,003,715,803 bytes
-               2 Dir(s)  822,760,230,912 bytes free
 
 P:\>docker run -it --rm -v "C:\Users\S236282\Desktop\Itaconate data\pySCENIC\docker:/data" aertslab/pyscenic:0.12.1 pyscenic grn --num_workers 6 -o /data/expr_mat.adjacencies.tsv /data/InjuryData_ExpressionT.csv /data/allTFs_mm.txt
 
-2024-11-18 14:54:49,920 - pyscenic.cli.pyscenic - INFO - Loading expression matrix.
-2024-11-18 14:55:16,602 - pyscenic.cli.pyscenic - INFO - Inferring regulatory networks.
-preparing dask client
-parsing input
-creating dask graph
-6 partitions
-computing dask graph
-not shutting down client, client was created externally
-finished
-2024-11-18 18:56:05,145 - pyscenic.cli.pyscenic - INFO - Writing results to file.
-
 P:\>docker run -it --rm -v "C:\Users\S236282\Desktop\Itaconate data\pySCENIC\docker:/data" aertslab/pyscenic:0.12.1 pyscenic ctx /data/expr_mat.adjacencies.tsv /data/mm10_500bp_up_100bp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather /data/mm10_10kbp_up_10kbp_down_full_tx_v10_clust.genes_vs_motifs.rankings.feather --annotations_fname /data/motifs-v10nr_clustnr_mgi.tbl --expression_mtx_fname /data/InjuryData_ExpressionT.csv --mode "custom_multiprocessing" --output /data/regulons.csv --num_workers 6
-
-2024-11-18 19:38:58,912 - pyscenic.cli.pyscenic - INFO - Creating modules.
-2024-11-18 19:39:03,344 - pyscenic.cli.pyscenic - INFO - Loading expression matrix.
-2024-11-18 19:39:32,284 - pyscenic.utils - INFO - Calculating Pearson correlations.
-2024-11-18 20:27:27,930 - pyscenic.cli.pyscenic - INFO - Writing results to file.
 
 P:\>docker run -it --rm -v "C:\Users\S236282\Desktop\Itaconate data\pySCENIC\docker:/data" aertslab/pyscenic:0.12.1 pyscenic aucell /data/InjuryData_ExpressionT.csv /data/regulons.csv -o /data/auc_mtx.csv --num_workers 6
 
-2024-11-18 20:30:41,645 - pyscenic.cli.pyscenic - INFO - Loading expression matrix.
-2024-11-18 20:31:07,392 - pyscenic.cli.pyscenic - INFO - Loading gene signatures.
-Create regulons from a dataframe of enriched features.
-Additional columns saved: []
-2024-11-18 20:31:16,972 - pyscenic.cli.pyscenic - INFO - Calculating cellular enrichment.
-2024-11-18 20:31:35,530 - pyscenic.cli.pyscenic - INFO - Writing results to file.
